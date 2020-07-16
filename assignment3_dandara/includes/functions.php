@@ -204,7 +204,7 @@ function deleteProfile($id, $username)
             $pieces = preg_split("/\|/", $line);
 
             // only deletes if the username matches
-            if($pieces[0] == $id && $pieces[1] == $username)
+            if($pieces[0] == $id && ($pieces[1] == $username || isset($_SESSION['admin'])))
             {
                 unlink('profiles/'.trim($pieces[2])); // delete the file
                 continue;                             // skip line, end loop

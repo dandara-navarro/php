@@ -85,7 +85,7 @@ $profiles = getAllProfiles();
                                    </span>
                     ';
 
-                if($profile['username'] == $_SESSION['username'])
+                if($profile['username'] == $_SESSION['username'] || isset($_SESSION['admin']))
                 {
                     echo '
                                 <span class="pull-right text-muted">

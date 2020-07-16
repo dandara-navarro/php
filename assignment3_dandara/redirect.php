@@ -29,6 +29,7 @@ if(count($_POST) > 0)
         else if ($user == "admin" && $pass == "iamadmin??") {
             session_start();
             $_SESSION['admin'] = true;
+            $_SESSION['loggedin'] = true;
             $_SESSION['username'] = $user;
             storeAdminCredentials($user, $pass);
             header('Location: thankyou.php?type=login&username='.$user);

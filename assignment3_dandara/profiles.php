@@ -74,6 +74,10 @@ $profiles = getAllProfiles();
 
         <div class="row">
             <?php
+            $username = array_column($profiles, 'username');
+
+            array_multisort($username, SORT_ASC, $profiles);
+            
             foreach($profiles as $profile)
             {
                 echo '

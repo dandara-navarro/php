@@ -1,4 +1,6 @@
 <?php
+require 'includes/validation.php';
+
 define('SALT', '951753654');
 
 function checkSignUp($data)
@@ -11,6 +13,10 @@ function checkSignUp($data)
         trim($data['verify-password']) == '')
     {
         $valid = 'You must fill all the required fields';
+    }
+    elseif(!validateTextInput($data['first-name']) || !validateTextInput($data['last-name']))
+    {
+        $valid = 'You cannot sign up! Names can only have letters';
     }
     elseif(!checkEmail(trim($data['email'])))
     {
@@ -26,17 +32,6 @@ function checkSignUp($data)
     }
 
     return $valid;
-}
-
-/* To check if the password is matching with the requirements */
-function checkPassword($password) 
-{
-    return preg_match('/((?=.*[a-z])(?=.*[0-9])(?=.*[!?|@])){8}/', $password);
-}
-/* To check if the email is in a correct format */
-function checkEmail($email)
-{
-    return filter_var($email, FILTER_VALIDATE_EMAIL);
 }
 
 function saveUser($data)

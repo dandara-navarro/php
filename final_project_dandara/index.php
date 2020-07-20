@@ -6,6 +6,8 @@ var_dump($_SESSION);
 echo '</pre>';
 
 $message = '';
+$user_logged = isset($_SESSION['user']);
+
 if(isset($_COOKIE['error_message']))
 {
     $message = '<div class="alert alert-danger text-center">'
@@ -62,18 +64,18 @@ if(isset($_GET['from']))
         </div>
 
         <div class="row">
-            <?php if(isset($_SESSION['user']))
+            <?php if($user_logged)
             {
                 echo '<p class="pull-right">User:' . $_SESSION['user'] . '</p>';
             }?>
             <div class="col-md-6 col-md-offset-3">
-                <button class="btn btn-default" data-toggle="modal" data-target="#newItem"><i class="fa fa-photo"></i> New Item</button>
-                <?php if(isset($_SESSION['user']))
+                <?php if($user_logged)
                 {
-                    echo '<a href="logout.php" class="btn btn-default pull-right"><i class="fa fa-sign-out"> </i> Logout</a>';
+                    echo '<button class="btn btn-default" data-toggle="modal" data-target="#newItem"><i class="fa fa-photo"></i> New Item</button>
+                    <a href="logout.php" class="btn btn-default pull-right"><i class="fa fa-sign-out"> </i> Logout</a>';
                 }
                 ?>
-                <?php if(!isset($_SESSION['user']))
+                <?php if(!$user_logged)
                 {
                     echo '<a href="#" class="btn btn-default pull-right" data-toggle="modal" data-target="#login"><i class="fa fa-sign-in"> </i> Login</a>
                     <a href="#" class="btn btn-default pull-right" data-toggle="modal" data-target="#signup"><i class="fa fa-user"> </i> Sign Up</a>';
@@ -584,7 +586,7 @@ if(isset($_GET['from']))
 
 <div id="newItem" class="modal fade" tabindex="-1" role="dialog">
 <div class="modal-dialog" role="document">
-    <form role="form" method="post" action="">
+    <form role="form" method="post" action="redirect.php?from=new-item" enctype="multipart/form-data">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -593,19 +595,19 @@ if(isset($_GET['from']))
             <div class="modal-body">
                 <div class="form-group">
                     <label>Title</label>
-                    <input class="form-control" type="text">
+                    <input name="title" class="form-control" type="text" maxlength="30" placeholder="Product Title">
                 </div>
                 <div class="form-group">
                     <label>Price</label>
-                    <input class="form-control" type="text">
+                    <input name="price" class="form-control" type="text" placeholder="Product Proce. E.g. 12.99">
                 </div>
                 <div class="form-group">
                     <label>Description</label>
-                    <input class="form-control" type="text">
+                    <input name="description" class="form-control" type="text" placeholder="Procuct Description">
                 </div>
                 <div class="form-group">
                     <label>Picture</label>
-                    <input class="form-control" type="file">
+                    <input name="picture" class="form-control" type="file">
                 </div>
             </div>
             <div class="modal-footer">

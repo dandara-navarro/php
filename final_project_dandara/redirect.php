@@ -1,5 +1,6 @@
 <?php 
-require 'includes/functions.php';
+require 'includes/manage_user.php';
+require 'includes/manage_product.php';
 
 if(count($_POST) > 0)
 {
@@ -37,7 +38,7 @@ if(count($_POST) > 0)
         {
             session_start();
             $_SESSION['loggedin'] = true;
-            $_SESSION['user_email'] = trim($_POST['email']);
+            $_SESSION['email'] = trim($_POST['email']);
             $_SESSION['user'] = $_POST['first-name'] . ' ' . $_POST['last-name'];
             header('Location: index.php?from=signup');
             exit();
@@ -46,6 +47,28 @@ if(count($_POST) > 0)
         setcookie('error_message', $message);
         header('Location: index.php');
         exit();
+    }
+    elseif($_GET['from'] == 'new-item')
+    {
+        if(count($_FILES) > 0)
+        {
+            session_start();
+            if(checkPicture($_FILES) != 'true')
+            {
+                setcookie('error_message', 'Choose a JPG image with up to 4MB.');
+                exit();
+            }
+            elseif(!validatePrice($_POST['price']))
+            {
+                setcookie('error_message', 'The product price is in incorrect format.');
+                exit();
+            }
+            else{
+                addProduct($_SESSION['email'], $_POST, $_FILES);
+            }
+            header('Location: index.php');
+        }
+        
     }
 }
 ?>

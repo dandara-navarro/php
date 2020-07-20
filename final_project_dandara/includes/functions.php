@@ -12,7 +12,7 @@ function checkSignUp($data)
     {
         $valid = 'You must fill all the required fields';
     }
-    elseif(!filter_var(trim($data['email']), FILTER_VALIDATE_EMAIL))
+    elseif(!checkEmail(trim($data['email'])))
     {
         $valid = 'You cannot sign up! E-mail format is incorrect';
     }
@@ -33,6 +33,11 @@ function checkPassword($password)
 {
     return preg_match('/((?=.*[a-z])(?=.*[0-9])(?=.*[!?|@])){8}/', $password);
 }
+/* To check if the email is in a correct format */
+function checkEmail($email)
+{
+    return filter_var($email, FILTER_VALIDATE_EMAIL);
+}
 
 function saveUser($data)
 {
@@ -48,7 +53,7 @@ function saveUser($data)
         $password   = trim($data['password']);
         $hash       = md5($password . SALT);
 
-        $results = fwrite($fp, $first_name.'|'.$last_name.'|'.$email.'|'.$hash. PHP_EOL);
+        $results = fwrite($fp, $email.'|'.$hash.'|'.$first_name.'|'.$last_name. PHP_EOL);
 
         fclose($fp);
 
@@ -59,6 +64,44 @@ function saveUser($data)
     }
 
     return $success;
+}
+
+/* To check if a user is registered to log in */
+function findUser($email, $pass)
+{
+    $found = false;
+    $lines = file('users.txt');
+
+    foreach($lines as $line)
+    {
+        $pieces = preg_split("/\|/", $line); 
+        $hash   = md5($pass . SALT);
+
+        if($pieces[0] == $email && trim($pieces[1]) == $hash)
+        {
+            $found = true;
+        }
+    }
+
+    return $found;
+}
+
+function getUser($email)
+{
+    $user = '-';
+
+    $lines = file('users.txt');
+
+    foreach($lines as $line)
+    {
+        $pieces = preg_split("/\|/", $line); 
+
+        if($pieces[0] == $email)
+        {
+            $user = $pieces[2] .' '. $pieces[3];
+        }
+    }
+    return $user;
 }
 
 ?>

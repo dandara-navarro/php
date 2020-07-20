@@ -15,11 +15,20 @@ if(isset($_COOKIE['error_message']))
     setcookie('error_message', null, time() - 3600);
 }
 
-if(isset($_GET['from']) && $_GET['from'] === 'signup')
+if(isset($_GET['from']))
 {
-    $message = '<div class="alert alert-success text-center">Thank you for signing up '
-        . $_SESSION['user'] .
-        '</div>';
+    if($_GET['from'] === 'signup')
+    {
+        $message = '<div class="alert alert-success text-center">Thank you for signing up '
+            . $_SESSION['user'] .
+            '</div>';
+    }
+    elseif($_GET['from'] === 'login')
+    {
+        $message = '<div class="alert alert-success text-center">Thank you for logging in '
+            . $_SESSION['user'] .
+            '</div>';
+    }
 }
 ?>
 
@@ -548,7 +557,7 @@ if(isset($_GET['from']) && $_GET['from'] === 'signup')
 
 <div id="login" class="modal fade" tabindex="-1" role="dialog">
 <div class="modal-dialog" role="document">
-    <form role="form" method="post" action="">
+    <form role="form" method="post" action="redirect.php?from=login">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -557,11 +566,11 @@ if(isset($_GET['from']) && $_GET['from'] === 'signup')
             <div class="modal-body">
                 <div class="form-group">
                     <label>Email</label>
-                    <input class="form-control" type="text">
+                    <input name="email" class="form-control" type="text">
                 </div>
                 <div class="form-group">
                     <label>Password</label>
-                    <input class="form-control" type="text">
+                    <input name="password" class="form-control" type="password">
                 </div>
             </div>
             <div class="modal-footer">

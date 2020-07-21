@@ -25,6 +25,23 @@ function addProduct($user_email, $data, $file)
     return $success;
 }
 
+function addRecentViewed($id)
+{
+    $lines = file('recent_viewed.txt');
+    
+    //If has already 4 recent viewed, delete the last one and add another.
+    if(count($lines) == 4)
+    {
+        array_pop($lines);
+        file_put_contents('recent_viewed.txt', $lines);
+    }
+    
+    $file_data = $id.PHP_EOL;
+    $file_data .= file_get_contents('recent_viewed.txt');
+    file_put_contents('recent_viewed.txt', $file_data);
+
+}
+
 function getProductsList()
 {
     $lines = file('products.txt');
@@ -118,6 +135,74 @@ function getProduct($id)
         }
     }
     return $product;
+}
+
+function renderProducts($file, $type)
+{
+    $viewed_list = false;
+    $lines = file($file);
+
+    foreach($lines as $line)
+    {
+        if($type === 'viewed_list')
+        {
+            $pieces = getProduct(trim($line));
+            $viewed_list = true;
+            echo '
+                <div class="col-md-3">
+                    <div class="panel panel-info">
+                        <div class="panel-heading">
+                               '.$pieces[2];
+                           
+        }
+        else
+        {
+            $pieces = preg_split("/\|/", $line);
+            echo getCardStyle(trim($pieces[6]), $pieces[0]);
+            echo '<span>
+                   '.$pieces[2].'
+                   </span>
+               ';
+        }
+        
+           if(isset($_SESSION['email']) && isTheOwner($_SESSION['email'], $pieces[1]))
+           {
+               echo '
+               <span class="pull-right">
+               <a class="" href="delete.php?id='.$pieces[0].'" data-toggle="tooltip" title="Delete item">
+                   <i class="fa fa-trash"></i>
+               </a>
+           </span>
+               ';
+           }
+                
+       echo '
+                
+            </div>
+            <div class="panel-body text-center">
+                <p>
+                    <a href="product.php?id='.$pieces[0].'">
+                        <img class="img-rounded img-thumbnail" src="products/'.$pieces[5].'"/>
+                    </a>
+                </p>
+                <p class="text-muted text-justify">
+                    '.$pieces[4].'
+                </p>
+                <a class="pull-left" href="" data-toggle="tooltip" title="Downvote item">
+                    <i class="fa fa-thumbs-down"></i>
+                </a>
+            </div>
+            <div class="panel-footer ">
+                <span><a href="mailto:'.$pieces[1].'" data-toggle="tooltip" title="Email seller"><i class="fa fa-envelope"></i> '.getUser($pieces[1]).'</a></span>
+                <span class="pull-right">'.$pieces[3].'</span>
+            </div>
+        </div>
+    </div>
+        
+        ';
+
+    } 
+
 }
 
 ?>

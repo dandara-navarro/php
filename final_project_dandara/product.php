@@ -6,6 +6,8 @@ $product_id = $_GET['id'];
 
 $product = getProduct($product_id);
 
+addRecentViewed($product_id);
+
 ?>
 
 <!DOCTYPE html>

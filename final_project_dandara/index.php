@@ -96,7 +96,8 @@ if(isset($_GET['from']))
             </div>
         </div>
         <div class="row">
-            <div class="col-md-3">
+        <?php renderProducts('recent_viewed.txt', 'viewed_list') ?>
+            <!-- <div class="col-md-3">
                 <div class="panel panel-info">
                     <div class="panel-heading">
                             Noodles
@@ -211,7 +212,7 @@ if(isset($_GET['from']))
                         <span class="pull-right">$10.00</span>
                     </div>
                 </div>
-            </div>
+            </div> -->
 
 
         </div>
@@ -254,7 +255,7 @@ if(isset($_GET['from']))
                         '.$pieces[2].'
                         </span>
                     ';
-                    if(isTheOwner($_SESSION['email'], $pieces[1]))
+                    if(isset($_SESSION['email']) && isTheOwner($_SESSION['email'], $pieces[1]))
                     {
                         echo '
                         <span class="pull-right">

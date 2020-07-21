@@ -99,4 +99,9 @@ function getUser($email)
     return $user;
 }
 
+function isTheOwner($session_user, $owner)
+{
+    return $session_user === $owner;
+}
+
 ?>

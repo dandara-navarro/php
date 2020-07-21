@@ -56,17 +56,19 @@ if(count($_POST) > 0)
             if(checkPicture($_FILES) != 'true')
             {
                 setcookie('error_message', 'Choose a JPG image with up to 4MB.');
-                exit();
+               // exit();
             }
             elseif(!validatePrice($_POST['price']))
             {
                 setcookie('error_message', 'The product price is in incorrect format.');
-                exit();
+               // exit();
             }
             else{
                 addProduct($_SESSION['email'], $_POST, $_FILES);
+               
             }
             header('Location: index.php');
+            exit();
         }
         
     }

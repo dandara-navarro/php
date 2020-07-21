@@ -1,3 +1,13 @@
+<?php 
+require 'includes/manage_product.php';
+require 'includes/manage_user.php';
+
+$product_id = $_GET['id'];
+
+$product = getProduct($product_id);
+
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -37,19 +47,21 @@
                 </div>
                 <div class="panel panel-info">
                     <div class="panel-heading">
-                        Noodles
+                        <?php echo $product[2] ?> 
                     </div>
                     <div class="panel-body text-center">
                         <p>
-                            <img class="img-rounded img-thumbnail" src="products/f88008dc63a67983e5824dafa0935662.png"/>
+                        <?php echo '
+                            <img class="img-rounded img-thumbnail" src="products/'.$product[5].'"/>
+                        ' ?> 
                         </p>
                         <p class="text-muted text-justify">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam et accumsan mauris, non faucibus massa. Maecenas ac dolor aliquet, euismod nisl ut, congue quam.
+                        <?php echo $product[4] ?> 
                         </p>
                     </div>
                     <div class="panel-footer ">
-                        <span><a href=""><i class="fa fa-envelope"></i> Alex Akins</a></span>
-                        <span class="pull-right">$11.99</span>
+                        <span><a href=""><i class="fa fa-envelope"></i> <?php echo getUser($product[1]) ?></a></span>
+                        <span class="pull-right"><?php echo $product[3] ?></span>
                     </div>
                 </div>
             </div>
@@ -59,32 +71,6 @@
 
 </div>
 
-<div id="newPost" class="modal fade" tabindex="-1" role="dialog">
-<div class="modal-dialog" role="document">
-    <form role="form" method="post" action="">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">New Profile</h4>
-            </div>
-            <div class="modal-body">
-                <div class="form-group">
-                    <label>Username</label>
-                    <input class="form-control disabled" disabled>
-                </div>
-                <div class="form-group">
-                    <label>Profile Picture</label>
-                    <input class="form-control" type="file" name="picture">
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <input type="submit" class="btn btn-primary" value="Submit!"/>
-            </div>
-        </div><!-- /.modal-content -->
-    </form>
-</div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
 </body>
 <script src="js/jquery.min.js"></script>
 <script src="js/bootstrap.min.js"></script>

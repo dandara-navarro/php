@@ -270,7 +270,7 @@ if(isset($_GET['from']))
                      </div>
                      <div class="panel-body text-center">
                          <p>
-                             <a href="product.php">
+                             <a href="product.php?id='.$pieces[0].'">
                                  <img class="img-rounded img-thumbnail" src="products/'.$pieces[5].'"/>
                              </a>
                          </p>

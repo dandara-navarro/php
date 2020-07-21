@@ -1,3 +1,3 @@
-5f1622b5e26f8|dandaranavarro@gmail.com|Web Developer|10.00|um sabaozinho|dc9dc3e49dd72c26a41f0c5bb237119c|unpin
-5f16231ddc6ce|dandaranavarro@gmail.com|PAnela|2.30|lalalla|edeb4d5caf1adf6bce9b85e42ab775bb|unpin
-5f162a6a98b2c|luiz@gmail.com|Churrasco|123.63|Um churrasco legal com cana|f57102a5ef277b580a98e24408bb5ec8|pin
+5f1622b5e26f8|dandaranavarro@gmail.com|Web Developer|10.00|um sabaozinho|dc9dc3e49dd72c26a41f0c5bb237119c|true
+5f16231ddc6ce|dandaranavarro@gmail.com|PAnela|2.30|lalalla|edeb4d5caf1adf6bce9b85e42ab775bb|false
+5f162a6a98b2c|luiz@gmail.com|Churrasco|123.63|Um churrasco legal com cana|f57102a5ef277b580a98e24408bb5ec8|true

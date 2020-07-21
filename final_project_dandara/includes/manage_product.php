@@ -27,24 +27,33 @@ function addProduct($user_email, $data, $file)
 
 function getProductsList()
 {
-    $template = '';
     $lines = file('products.txt');
+    $products = [];
 
-    foreach($lines as $line)
+    if($lines != false)
     {
-        $pieces = preg_split("/\|/", $line); // | is a special character, so escape it
-
-        if($pieces[0] === $id)
+        foreach($lines as $line)
         {
-            $profile = $pieces;
+            $pieces = preg_split("/\|/", $line);
+
+            $product['id']       = $pieces[0];
+            $product['email'] = $pieces[1];
+            $product['title']  = $pieces[2];
+            $product['price']  = $pieces[3];
+            $product['description']  = $pieces[4];
+            $product['picture']  = $pieces[5];
+            $product['pin']  = $pieces[6];
+
+            $products[] = $product;
         }
     }
-    return $profile;
+
+    return $products;
 }
 
 function getCardStyle($pinStatus, $item_id)
 {
-    if($pinStatus === 'pin')
+    if($pinStatus == 'true')
     {
         return '<div class="col-md-3">
                 <div class="panel panel-warning">
@@ -88,6 +97,27 @@ function deleteProduct($id, $email)
 
         fclose($fp);
     }
+}
+
+function getProduct($id)
+{
+    $product = [];
+    $lines = file('products.txt');
+    
+    if($lines != false)
+    {
+        foreach($lines as $line)
+        {
+            $pieces = preg_split("/\|/", $line);
+
+            // only deletes if the username matches
+            if($pieces[0] == $id)
+            {
+                $product = $pieces;          
+            }
+        }
+    }
+    return $product;
 }
 
 ?>

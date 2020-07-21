@@ -153,7 +153,7 @@ function renderProducts($file, $type)
                     <div class="panel panel-info">
                         <div class="panel-heading">
                                '.$pieces[2];
-                           
+                                         
         }
         else
         {

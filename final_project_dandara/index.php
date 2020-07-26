@@ -6,10 +6,12 @@ session_start();
 
 echo '<pre>';
 var_dump($_SESSION);
+print_r($_POST);
 echo '</pre>';
 
 $message = '';
 $user_logged = isset($_SESSION['user']);
+//$products_list = renderProducts('products.txt', 'sale_list', false); 
 
 if(isset($_COOKIE['error_message']))
 {
@@ -34,6 +36,21 @@ if(isset($_GET['from']))
             . $_SESSION['user'] .
             '</div>';
     }
+}
+
+if(isset($_GET['search']))
+{
+    //checks if any data is in the search variable
+    if(!empty($_POST["search"]))
+    {
+        //$products_list = '$post search is not empty ' . $_POST['search'];
+        
+        $products_list = renderProducts('products.txt', 'sale_list', true);
+    }
+}
+else
+{
+    $products_list = renderProducts('products.txt', 'sale_list', false); 
 }
 ?>
 
@@ -96,7 +113,7 @@ if(isset($_GET['from']))
             </div>
         </div>
         <div class="row">
-        <?php renderProducts('recent_viewed.txt', 'viewed_list') ?>
+        <?php echo renderProducts('recent_viewed.txt', 'viewed_list', false) ?>
         </div>
 
         <div class="row">
@@ -110,11 +127,11 @@ if(isset($_GET['from']))
 
         <div class="row">
             <div class="col-md-4">
-                    <form class="form-inline">
+                    <form class="form-inline" method="post" action="index.php">
                         <div class="form-group">
                             <div class="input-group">
                                 <div class="input-group-addon"><i class="fa fa-search"></i></div>
-                                <input type="text" class="form-control" placeholder="Search"/>
+                                <input name="search" type="text" class="form-control" placeholder="Search"/>
                             </div>
                         </div>
                         <input type="submit" class="btn btn-default" value="Search"/>
@@ -125,7 +142,7 @@ if(isset($_GET['from']))
         </div>
 
         <div class="row">
-            <?php renderProducts('products.txt', 'sale_list') ?>
+            <?php echo $products_list ?>
         </div>
     </div>
 </div>

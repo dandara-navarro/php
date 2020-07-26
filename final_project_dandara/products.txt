@@ -1,3 +1,4 @@
-5f1622b5e26f8|dandaranavarro@gmail.com|Web Developer|10.00|um sabaozinho|dc9dc3e49dd72c26a41f0c5bb237119c|true
-5f16231ddc6ce|dandaranavarro@gmail.com|PAnela|2.30|lalalla|edeb4d5caf1adf6bce9b85e42ab775bb|false
 5f162a6a98b2c|luiz@gmail.com|Churrasco|123.63|Um churrasco legal com cana|f57102a5ef277b580a98e24408bb5ec8|true
+5f1cdb87b307a|dandaranavarro@gmail.com|Bed|600.99|Comfortable queen size bed in a great price.|4c7036256f7c9dd800639903295e68a7|false
+5f1ceebbe2d39|luiz@gmail.com|Computer|1000.99|Acer personal computer|5e84de00660cfa413166896d04027434|false
+5f1ceef9672da|luiz@gmail.com|Labrador|600.30|Cute dog|84f9b14575f9e79ff92cd95cb8fe5d4c|false

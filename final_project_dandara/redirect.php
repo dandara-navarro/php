@@ -2,6 +2,13 @@
 require 'includes/manage_user.php';
 require 'includes/manage_product.php';
 
+session_start();
+if(!isset($_SESSION['loggedin']))
+{
+    header('Location: index.php');
+    exit();
+}
+
 if(count($_POST) > 0)
 {
      if($_GET['from'] == 'login')
@@ -76,13 +83,8 @@ if(count($_POST) > 0)
 elseif(isset($_GET['downvote']))
 {
     $product_id = $_GET['downvote'];
-    //echo 'entrei 1';
-    // if(isset($_SESSION))
-    // {
-        $user_email = $_SESSION['email'];
-        downvoteProduct($product_id, $user_email);
-        //echo 'entrei';
-    // }
+    $user_email = $_SESSION['email'];
+    downvoteProduct($product_id, $user_email);
     header('Location: index.php');
     exit();
 }

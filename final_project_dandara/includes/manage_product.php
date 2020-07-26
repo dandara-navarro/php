@@ -12,8 +12,7 @@ function addProduct($user_email, $data, $file)
     if($fp != false && $moved)
     {
         $product_id = uniqid();
-        $downvote_list = serialize([]);
-        $results = fwrite($fp, $product_id.'|'.$user_email.'|'.$data['title'].'|'.$data['price'].'|'.$data['description'].'|'.$product_picture.'|'.'false'.'|'.$downvote_list.PHP_EOL);
+        $results = fwrite($fp, $product_id.'|'.$user_email.'|'.$data['title'].'|'.$data['price'].'|'.$data['description'].'|'.$product_picture.'|'.'false'.PHP_EOL);
 
         fclose($fp);
 
@@ -145,40 +144,56 @@ function getProduct($id)
     return $product;
 }
 
-/** 
- * Function to set a product value
- * 
- *  For example, set if it is pin or unpin, set the downvote list
- * 
- *   @param $product_id - the identification for the product
- *   @param $value_index - int the position related to the data to be changed
- *   @param $value - the new value to be inserted
- * 
-*/
-function setProduct($product_id, $value_index, $value)
-{
-    // TODO
-}
-
 function downvoteProduct($product_id, $user_email)
 {
-    $lines = file('products.txt');
-    
-    if($lines != false)
+    if(userCanDownvote($product_id, $user_email))
     {
-        foreach($lines as $line)
-        {
-            $pieces = preg_split("/\|/", $line);
+        $lines = file('downvotes.txt');
+    
+        //$success = false;
 
-            if($pieces[0] == $product_id)
-            {
-                $downvote_list = unserialize($pieces[7]);
-                array_push($downvote_list, $user_email);
-                $pieces[7] = serialize($downvote_list);         
-            }
+        $fp = fopen('downvotes.txt', 'a+');
+
+        if($fp != false)
+        {
+            $results = fwrite($fp, $product_id.'|'.$user_email. PHP_EOL);
+
+            fclose($fp);
+
+            // if($results)
+            // {
+            //     $success = true;
+            // }
         }
-    }   
-    return $pieces[7];     
+    }
+    else
+    {
+        setcookie('error_message', 'You already downvote this item', time() + 60);
+    }
+
+    //return $success;    
+}
+
+/* Function to check if the user already downvote this product or
+if the user can still do this */
+function userCanDownvote($product_id, $user_email)
+{
+   $result = true;
+   $lines = file('downvotes.txt');
+    
+   if($lines != false)
+   {
+       foreach($lines as $line)
+       {
+           $pieces = preg_split("/\|/", $line);
+
+           if($pieces[0] == $product_id && trim($pieces[1]) == $user_email)
+           {
+                $result = false;         
+           }
+       }
+   }
+   return $result; 
 }
 
 function renderProducts($file, $type, $is_searching)

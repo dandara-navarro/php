@@ -4,9 +4,17 @@ require 'includes/manage_user.php';
 
 $product_id = $_GET['id'];
 
-$product = getProduct($product_id);
+/* If the product is archived because it has 5 downvotes or it has been published
+more than one hour before, it will not be rendered by URL */
+if(productIsArchived($product_id) === false)
+{
+    $product = getProduct($product_id);
+    addRecentViewed($product_id);
+}
+else{
+    header('Location: index.php');
+}
 
-addRecentViewed($product_id);
 
 ?>
 
